@@ -7,4 +7,4 @@ if __name__ == "__main__":
     a = input()
 
     if a == 'no':
-        print("hello world")
+        print("HACKERMAN was here")
