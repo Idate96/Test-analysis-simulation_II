@@ -1,4 +1,5 @@
 'testing unittest'
+'prime will find prime numbers below input integer'
 import unittest
 
 def prime(num):
@@ -25,3 +26,4 @@ def prime(num):
 
 class Testprimes(unittest.TestCase):
     def test(self):
+        self.assertAlmostEquals(prime(10),)
