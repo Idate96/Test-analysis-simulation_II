@@ -11,6 +11,6 @@ def func():
 
 if __name__ == "__main__":
 
-    print('do you agree Toon sucks?)
+    print('do you agree Toon sucks?')
 
     a = input()

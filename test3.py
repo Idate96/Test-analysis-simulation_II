@@ -10,5 +10,3 @@ def func(v):
         ytab.append(y)
 
     return xtab+ytab
-
-print(func(10))
