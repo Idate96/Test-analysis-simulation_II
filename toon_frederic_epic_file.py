@@ -12,3 +12,4 @@ print("Here we gooo!!!")
 # then we can make a clear conclusion between 4 and 16 m/s about the viscosity
 # This can be done using a planar graph of the velocity and let them intersect
 # eachother
+print(TestList[0])
