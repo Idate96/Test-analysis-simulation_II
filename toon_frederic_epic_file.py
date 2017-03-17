@@ -10,13 +10,15 @@ def Make_TestList():
 
     takes in nothing, starts at the origin with steps of 0.2 till 1
     """
+
+    def tuple_returner(i, j):
+        return (i * 0.2, j * 0.2, 0, i+j, 0, 0)
     ans = []
     semi_ans = []
     for i in range(6):
         for j in range(6):
-            def tuple_returner(i, j):
-                return (i * 0.2, j * 0.2, 0, i+j, 0, 0)
-            
+
+
 
 
 print("Here we gooo!!!")
