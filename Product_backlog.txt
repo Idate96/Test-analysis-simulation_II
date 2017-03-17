@@ -1,6 +1,12 @@
 Product backlog
 
+1 Flow visualization and data loading
 
+2 Component wise analysis of vector field
+
+3 Circulation calculation and representation
+
+4 Strain and vorticity tensors
 
 5 Q vortex algorithm
 
@@ -17,3 +23,5 @@ Product backlog
 11 Reynolds stress tensor due to turbulence
 
 12 Analysis of asymmetries
+
+13 Company party --- Fréderic and Sybe --- 
