@@ -19,8 +19,7 @@ def load(x,y,location):
     return data[numb_loc]
 
 
-print(load(0,0,1))
+
 #example how to use it:
-#location = 'exp_data_kopie\StD_vel04.plt'
-#print(load(0,0,location))
+#print(load(0,0,1))
 #this will print the first row
