@@ -13,10 +13,11 @@ def Make_TestList():
     def tuple_returner(i, j):
         return (i * 0.2, j * 0.2, 0, i+j, 0, 0)
     ans = []
-    semi_ans = []
     for j in range(6):
+        semi_ans = []
         for i in range(6):
             semi_ans.append(tuple_returner(i, j))
+            print(semi_ans)
         ans.append(semi_ans)
 
     return ans
