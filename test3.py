@@ -12,3 +12,4 @@ def func(v):
     return xtab+ytab
 
 print(func(10))
+print(func(12*9))
