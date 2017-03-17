@@ -14,4 +14,12 @@ Product backlog
 
 7 λ vortex algorithm
 
-8 Flow fluctuation 
+8 Discrete vortex algorithm
+
+9 Comparison of vortex detection methods
+
+10 Flow fluctuation and average mean flow
+
+11 Reynolds stress tensor due to turbulence
+
+12 Analysis of asymmetries
