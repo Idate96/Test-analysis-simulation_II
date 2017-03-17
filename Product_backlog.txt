@@ -1,12 +1,6 @@
 Product backlog
 
-1 Flow visualization and data loading --- Sybe and Aert and Mustafa ---
 
-2 Component wise analysis of vector field --- Toon and Frederic ---
-
-3 Circulation calculation and representation --- Lex and Nikhil the best ---
-
-4 Strain and vorticity tensors --- Lorenzo and  ---
 
 5 Q vortex algorithm
 
