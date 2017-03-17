@@ -1,4 +1,7 @@
 """Circulation."""
 print(" porro porro ")
 
-#check check
+#need vorticity equation
+#now how to program a double integration
+#divide grid into smaller grids
+#visualize/plot the circulation
