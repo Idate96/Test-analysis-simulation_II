@@ -1,6 +1,12 @@
 Product backlog
 
+1 Flow visualization and data loading
 
+2 Component wise analysis of vector field
+
+3 Circulation calculation and representation
+
+4 Strain and vorticity tensors
 
 5 Q vortex algorithm
 
