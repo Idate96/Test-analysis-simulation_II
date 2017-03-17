@@ -1,7 +1,5 @@
 Product backlog
 
-
-
 5 Q vortex algorithm
 
 6 Δ vortex algorithm
