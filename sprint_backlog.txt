@@ -4,4 +4,8 @@
 
 3 Circulation calculation and representation --- Lex and Nikhil the best ---
 
+<<<<<<< HEAD
 4 Strain and vorticity tensors --- Lorenzo and  --- Krijn
+=======
+4 Strain and vorticity tensors --- Lorenzo and Krijn ---
+>>>>>>> 5826303b7c5a51cbc96055fd83c6817bdd97597a
