@@ -4,16 +4,15 @@ from mpl_toolkits.mplot3d import axes3d
 import numpy as np
 
 print("here is where the magic will happen")
-TestList = [[(0.2, 0.2, 0, 0, 0, 0), (0.4, 0.2, 0, 1, 0, 0), (0.6, 0.2, 0, 2, 0, 0), (0.8, 0.2, 0, 1, 0, 0), (1.0, 0.2, 0, 0, 0, 0)], [(0.2, 0.4, 0, 1, 0, 0), (0.4, 0.4, 0, 2, 0, 0), (0.6, 0.4, 0, 3, 0, 0), (0.8, 0.4, 0, 2, 0, 0), (1.0, 0.4, 0, 1, 0, 0)], [(0.2, 0.6, 0, 2, 0, 0), (0.4, 0.6, 0, 3, 0, 0), (0.6, 0.6, 0, 4, 0, 0), (0.8, 0.6, 0, 3, 0, 0), (1.0, 0.6, 0, 2, 0, 0)], [(0.2, 0.6, 0, 2, 0, 0), (), (), (), ()], [(), (), (), (), ()]]
+
 
 def Make_TestList():
-    """
-    This function makes a testlist that consists of 5 lists, each with 5 tuples
-    to represent the data received by 1.
+    """This function makes a testlist.
 
+    The testlist consists of 5 lists, each with 5 tuples
+    to represent the data received by 1.
     takes in nothing, starts at the origin with steps of 0.2 till 1
     """
-
     def tuple_returner(i, j):
         return (i * 0.2, j * 0.2, 0, i+j, 0, 0)
 
@@ -27,9 +26,9 @@ def Make_TestList():
     return ans
 
 
-
-
 print("Here we gooo!!!")
+
+
 # we should know what data structure we receive
 # with that we can work to get the components of the velocity at different
 # points
