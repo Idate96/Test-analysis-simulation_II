@@ -148,10 +148,11 @@ def countour_data_plot(xx, yy, data, *args, save=False, show=True):
         plt.show()
 
 if __name__ == '__main__':
-    x, y, vel = load_data('16')
-    xx, yy = np.meshgrid(x, y)
-    print(vel[2, :, :])
-    # plot_data_3d(xx, yy, vel[0, :, :])
-    countour_data_plot(xx, yy, vel[0, :, :])
-    countour_data_plot(xx, yy, vel[1, :, :])
-    countour_data_plot(xx, yy, vel[2, :, :])
+    pass
+    # x, y, vel = load_data('16')
+    # xx, yy = np.meshgrid(x, y)
+    # print(vel[2, :, :])
+    # # plot_data_3d(xx, yy, vel[0, :, :])
+    # countour_data_plot(xx, yy, vel[0, :, :])
+    # countour_data_plot(xx, yy, vel[1, :, :])
+    # countour_data_plot(xx, yy, vel[2, :, :])

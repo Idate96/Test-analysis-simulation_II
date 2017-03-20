@@ -86,6 +86,7 @@ def contruct_strain_tensor(u_grad, v_grad):
     return strain_tensor
 
 if __name__ == '__main__':
+    pass
     # x, y, vel = load_data('04')
     # xx, yy = np.meshgrid(x, y)
     # u_grad, v_grad, w_grad = velocity_gradients(vel)
