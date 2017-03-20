@@ -1,6 +1,12 @@
 # loading of the experimental data
 # importing modules
 import numpy as np
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d.axes3d import Axes3D
+from matplotlib import cm
+import vortex_detection
 
 # loading the data (StD_vel04)
 
@@ -65,7 +71,7 @@ def load_data(experiment):
     Returns:
         x (np.array) = 1d array of coordinates of the dof
         y (np.array) = 1d array of the y coordinates of the dof
-        vel (np.array) = vel[0,i,j] is the u of the point_ij and v[1,i,j] is the v of point_ij
+        vel (np.array : shape (3, # x dof, # y dof)) = vel[0,i,j] is the u of the point_ij and v[1,i,j] is the v of point_ij ...
 
     """
     try:
@@ -76,11 +82,76 @@ def load_data(experiment):
     data = np.loadtxt(dir_path + "/../exp_data/Velocity_" + experiment + ".plt", skiprows=4)
     # select columns data reppresenting position
     position = data[:, :2]
+    velocity = remove_zeros(data[:, 3:])
     x, y, dim = parse_structured_grid(position)
     # data is missing one row
     first_row = np.array((0))
     # stack missing row and reshape according to the dimensions of the grid
-    u = np.hstack((first_row, data[:, 3])).reshape(dim)
-    v = np.hstack((first_row, data[:, 4])).reshape(dim)
-    vel = np.array((u, v))
+    u = np.hstack((first_row, velocity[:, 0])).reshape(dim)
+    v = np.hstack((first_row, velocity[:, 1])).reshape(dim)
+    w = np.hstack((first_row, velocity[:, 2])).reshape(dim)
+    vel = np.array((u, v, w))
     return x, y, vel
+
+
+def remove_zeros(velocity):
+    for i in range(np.shape(velocity)[1]):
+        mask = np.where(velocity[:, i] == 0)
+        velocity[mask, i] = np.nan
+    return velocity
+
+
+def plot_data_3d(xx, yy, data, save=False, show=True, *args):
+    """Plot interpolant function.
+
+    Args:
+        xx (np.array) = array of x coordinated created through meshgrid
+        yy (np.array) = array of y coordinated created through meshgrid
+        radial func (obj func) = radial function
+        l (float) = parameter for sharpness of radial func.
+
+    """
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    p = ax.plot_surface(xx, yy, data, rstride=1, cstride=1, linewidth=0,
+                        cmap=cm.bone, vmin=np.nanmin(data), vmax=np.nanmax(data))
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    fig.colorbar(p)
+    # Set rotation angle to 30 degrees
+    ax.view_init(azim=70)
+    # for angle in range(0, 360):
+    #     ax.view_init(30, angle)
+    #     plt.draw()
+    if args:
+        ax.set_title(args[0])
+        ax.set_zlabel(args[1])
+    if save:
+        plt.savefig(dir_path + '/../images/' + args[0] + '.png', bbox_inches='tight')
+    plt.show()
+
+
+def countour_data_plot(xx, yy, data, *args, save=False, show=True):
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111)
+    cs = plt.contourf(xx, yy, data, 10, cmap=cm.bone, origin='lower')
+    ax.set_xlabel('x')
+    # ax.set_ylabel('y')
+    fig.colorbar(cs)
+    print(args)
+    if args:
+        ax.set_title(args[0])
+        ax.set_ylabel(args[1])
+    if save and args:
+        plt.savefig(dir_path + '/../images/' + args[0] + '.png', bbox_inches='tight')
+    if show:
+        plt.show()
+
+if __name__ == '__main__':
+    x, y, vel = load_data('16')
+    xx, yy = np.meshgrid(x, y)
+    print(vel[2, :, :])
+    # plot_data_3d(xx, yy, vel[0, :, :])
+    countour_data_plot(xx, yy, vel[0, :, :])
+    countour_data_plot(xx, yy, vel[1, :, :])
+    countour_data_plot(xx, yy, vel[2, :, :])
