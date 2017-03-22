@@ -33,7 +33,7 @@ def delta_test(u_grad, v_grad):
     return delta
 
 
-def discrete_method(velgrid):
+def discrete_method(velocity):
     """This module uses a discrete method to determine vortex centers.
 
     First it evaluates at every point if the condition for a vortex center
@@ -45,27 +45,35 @@ def discrete_method(velgrid):
     Arg:
 
         pos_pt (Tuple) = storage number of a point in the grid , ie (1,0).
-        velgrid (np array) = velocity components in the grid.
+        velocity (np array) = velocity components in the grid.
     """
 
-    # The indices of the vortex centers will be stored in a list.
 
-    vortex_center_ind = []
-    for i, row in enumerate(velgrid):
-        for j, element in enumerate(velgrid):
-            vel0 = velgrid[i, j]  # velocity of the actual point
-            vel1 = velgrid[i - 1, j]  # velocity of the left point
-            vel2 = velgrid[i, j + 1]  # velocity of the top point
-            vel3 = velgrid[i + 1, j]  # velocity of the right point
-            vel4 = velgrid[i, j - 1]  # velocity of the bottom point
+    # The position  indices of the vortex centers will be stored in a list.
+    vortex_center_indices = []
+    u_vel = velocity[0]
+    v_vel = velocity[1]
+    w_vel = velocity[2]
+    rows, columns = np.shape(u_vel)
 
-            check1 = np.sign(vel1[0]) + np.sign(vel3[0]) + np.sign(vel2[1]) + np.sign(vel4[1])
-            check2 = np.sign(vel1[0]) + np.sign(vel2[1])
-            check3 = 0
+    for i in range(1, rows-1):
+        for j in range(1, columns-1):
+            print(i)
+            print(j)
 
-            if (int(check1) == 0) and (int(check2) != 0) and not (np.all(vel1) == 0):
-                vortex_center_ind.append((i, j))
 
+            # vel0 = velocity[j, k]  # velocity of the actual point
+            # vel1 = velocity[i - 1, j]  # velocity of the left point
+            # vel2 = velocity[i, j + 1]  # velocity of the top point
+            # vel3 = velocity[i + 1, j]  # velocity of the right point
+            # vel4 = velocity[i, j - 1]  # velocity of the bottom point
+            check1 = np.sign(u_vel[i-1, j]) + np.sign(u_vel[i+1, j]) + np.sign(v_vel[i, j+1]) + np.sign(v_vel[i, j-1])
+            check2 = np.sign(u_vel[i-1, j]) + np.sign(v_vel[i, j+1])
+            print(check1)
+            if (check1 == 0.) and (check2 != 0.):
+                vortex_center_indices.append((i, j))
+
+    return vortex_center_indices
 
 if __name__ == '__main__':
     pass
