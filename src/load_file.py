@@ -147,8 +147,39 @@ def countour_data_plot(xx, yy, data, *args, save=False, show=True):
     if show:
         plt.show()
 
+def vortexcenter_scatter_plot(xx, yy, data, centers, *args, save=False, show=True, new_plot=True):
+    if new_plot:
+        fig = plt.figure(figsize=(10, 8))
+        ax = fig.add_subplot(111)
+        cs = plt.contourf(xx, yy, data, 10, cmap=cm.bone, origin='lower')
+        fig.colorbar(cs)
+        ax.set_xlabel('x')
 
-def quiver_data_plot(xx, yy, data, plane_vector, *args, save=False, show=True):
+    xlst = []
+    ylst = []
+    strengthlst = []
+    for point in centers:
+        i,j,strength = point
+        x = xx[i, j]
+        y = yy[i, j]
+        strengthlst.append(strength*100)
+        xlst.append(x)
+        ylst.append(y)
+
+    plt.scatter(xlst,ylst, s = strengthlst)
+
+    # ax.set_ylabel('y')
+    if args:
+        ax.set_title(args[0])
+        ax.set_ylabel(args[1])
+    if save and args:
+        plt.savefig(dir_path + '/../images/' + args[0] + '.png', bbox_inches='tight')
+    if show:
+        plt.show()
+
+
+
+def quiver_data_plot(xx, yy, data, plane_vector, *args, vortex_centers = None, save=False, show=True):
     """Quiver plot."""
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111)
@@ -158,6 +189,8 @@ def quiver_data_plot(xx, yy, data, plane_vector, *args, save=False, show=True):
     Q = plt.quiver(xx, yy, plane_vector[0], plane_vector[1], units='width', pivot='tip', scale=5)
     qk = plt.quiverkey(Q, 0.9, 0.9, max, r'{0:.2f} m/s' .format(max), labelpos='E',
                        coordinates='figure')
+    if vortex_centers:
+        vortexcenter_scatter_plot(xx,yy,data,vortex_centers, show=False, new_plot=False)
     ax.set_xlabel('x')
     # ax.set_ylabel('y')
     fig.colorbar(cs)
