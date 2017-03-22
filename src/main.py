@@ -13,7 +13,7 @@ if __name__ == '__main__':
     # quiver plot
     quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
                      'Normalized z velocity', 'w/U', save=False)
-
+    '''
     # 3d plotting
     plot_data_3d(xx, yy, vel[0, :, :])
     plot_data_3d(xx, yy, vel[1, :, :])
@@ -23,7 +23,7 @@ if __name__ == '__main__':
     countour_data_plot(xx, yy, vel[0, :, :], 'Normalized x velocity', 'u/U', save=False)
     countour_data_plot(xx, yy, vel[1, :, :], 'Normalized y velocity', 'v/U', save=False)
     countour_data_plot(xx, yy, vel[2, :, :], 'Normalized z velocity', 'w/U', save=False)
-
+    '''
     # vortex detection preliminaries
     u_grad, v_grad, w_grad = vorticity_strain.velocity_gradients(vel)
     vorticity_value = vorticity_strain.find_vorticity(u_grad, v_grad)
@@ -37,7 +37,11 @@ if __name__ == '__main__':
 
     # vortex detection methods
     q = vortex_detection.q_test(vort_tens, strain_tensor)
+    mask = np.where(q > 0)
+    q[mask] *= 10
     countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=False)
 
     delta = vortex_detection.delta_test(u_grad, v_grad)
+    mask = np.where(delta > 0)
+    delta[mask] *= 10
     countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=False)

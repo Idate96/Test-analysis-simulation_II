@@ -33,9 +33,6 @@ def delta_test(u_grad, v_grad):
     return delta
 
 
-<<<<<<< HEAD
-def discrete_method(velocity):
-=======
 def lambda_test(vorticity_tens, strain_tens):
     """This does not work in 2d."""
     vort_tens_sq = np.empty(np.shape(vorticity_tens))
@@ -57,8 +54,7 @@ def lambda_test(vorticity_tens, strain_tens):
     return eigenvalues[:, :, 0]
 
 
-def discrete_method(velgrid):
->>>>>>> 2c830ec2053c8bfea6c1b8f2fa9f93456e1114d6
+def discrete_method(velocity):
     """This module uses a discrete method to determine vortex centers.
 
     First it evaluates at every point if the condition for a vortex center
