@@ -2,6 +2,7 @@
 """
 import numpy as np
 import vorticity_strain
+import load_file
 import pdb
 
 
@@ -27,10 +28,30 @@ def delta_test(u_grad, v_grad):
     delta = np.empty(np.shape(strain_t)[2:])
 
     for i in range(np.shape(strain_t)[2]):
-        print(i)
         for j in range(np.shape(strain_t)[3]):
             delta[i, j] = ((q[i, j] / 3) ** 3 + (np.linalg.det(jacobian[:, :, i, j]) / 2) ** 2)
     return delta
+
+
+def lambda_test(vorticity_tens, strain_tens):
+    """This does not work in 2d."""
+    vort_tens_sq = np.empty(np.shape(vorticity_tens))
+    strain_tens_sq = np.empty(np.shape(strain_tens))
+    for i in range(np.shape(vorticity_tens)[0]):
+        for j in range(np.shape(vorticity_tens)[1]):
+            vort_tens_sq[i, j] = np.square(vort_tens[i, j])
+            strain_tens_sq[i, j] = np.square(strain_tens[i, j])
+    M = vort_tens_sq + strain_tens
+
+    eigenvalues = np.empty((*np.shape(M[0, 0]), 2))
+    for i in range(np.shape(M[0, 0])[0]):
+        for j in range(np.shape(M[0, 0])[1]):
+            if np.isnan(M[:, :, i, j]).any():
+                M[:, :, i, j] = np.nan_to_num(M[:, :, i, j])
+            eigenvalues[i, j], eig_vect = np.linalg.eig(M[:, :, i, j])
+            eigenvalues[i, j] = np.sort(eigenvalues[i, j])
+
+    return eigenvalues[:, :, 0]
 
 
 def discrete_method(velgrid):
@@ -68,4 +89,14 @@ def discrete_method(velgrid):
 
 
 if __name__ == '__main__':
-    pass
+    exp = '04'
+    x, y, vel = load_file.load_data(exp)
+    xx, yy = np.meshgrid(x, y)
+
+    u_grad, v_grad, w_grad = vorticity_strain.velocity_gradients(vel)
+    vorticity_value = vorticity_strain.find_vorticity(u_grad, v_grad)
+    strain = vorticity_strain.find_strain(u_grad, v_grad)
+    vort_tens = vorticity_strain.construct_vorticity_tensor(u_grad, v_grad)
+    strain_tensor = vorticity_strain.contruct_strain_tensor(u_grad, v_grad)
+    eigenvalues_2 = lambda_test(vort_tens, strain_tensor)
+    load_file.countour_data_plot(xx, yy, eigenvalues_2)
