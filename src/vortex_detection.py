@@ -33,6 +33,30 @@ def delta_test(u_grad, v_grad):
     return delta
 
 
+<<<<<<< HEAD
+=======
+def lambda_test(vorticity_tens, strain_tens):
+    """This does not work in 2d."""
+    vort_tens_sq = np.empty(np.shape(vorticity_tens))
+    strain_tens_sq = np.empty(np.shape(strain_tens))
+    for i in range(np.shape(vorticity_tens)[0]):
+        for j in range(np.shape(vorticity_tens)[1]):
+            vort_tens_sq[i, j] = np.square(vort_tens[i, j])
+            strain_tens_sq[i, j] = np.square(strain_tens[i, j])
+    M = vort_tens_sq + strain_tens
+
+    eigenvalues = np.empty((*np.shape(M[0, 0]), 2))
+    for i in range(np.shape(M[0, 0])[0]):
+        for j in range(np.shape(M[0, 0])[1]):
+            if np.isnan(M[:, :, i, j]).any():
+                M[:, :, i, j] = np.nan_to_num(M[:, :, i, j])
+            eigenvalues[i, j], eig_vect = np.linalg.eig(M[:, :, i, j])
+            eigenvalues[i, j] = np.sort(eigenvalues[i, j])
+
+    return eigenvalues[:, :, 0]
+
+
+>>>>>>> 190fb8a45ee6a716c9371508aae04f7507d91465
 def discrete_method(velocity):
     """This module uses a discrete method to determine vortex centers.
 
