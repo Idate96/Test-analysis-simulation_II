@@ -147,6 +147,29 @@ def countour_data_plot(xx, yy, data, *args, save=False, show=True):
     if show:
         plt.show()
 
+
+def quiver_data_plot(xx, yy, data, plane_vector, *args, save=False, show=True):
+    """Quiver plot."""
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111)
+    cs = plt.contourf(xx, yy, data, 10, cmap=cm.bone, origin='lower')
+    mag_plane_vel = (plane_vector[0, :, :] ** 2 + plane_vector[1, :, :] ** 2) ** 0.5
+    max = np.nanmax(mag_plane_vel)
+    Q = plt.quiver(xx, yy, plane_vector[0], plane_vector[1], units='width', pivot='tip', scale=5)
+    qk = plt.quiverkey(Q, 0.9, 0.9, max, r'{0:.2f} m/s' .format(max), labelpos='E',
+                       coordinates='figure')
+    ax.set_xlabel('x')
+    # ax.set_ylabel('y')
+    fig.colorbar(cs)
+    print(args)
+    if args:
+        ax.set_title(args[0])
+        ax.set_ylabel(args[1])
+    if save and args:
+        plt.savefig(dir_path + '/../images/' + args[0] + '.png', bbox_inches='tight')
+    if show:
+        plt.show()
+
 if __name__ == '__main__':
     pass
     # x, y, vel = load_data('16')
