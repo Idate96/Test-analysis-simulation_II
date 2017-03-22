@@ -15,9 +15,9 @@ if __name__ == '__main__':
     plot_data_3d(xx, yy, vel[2, :, :])
 
     # countour plotting
-    countour_data_plot(xx, yy, vel[0, :, :], 'Normalized x velocity', 'u/U_∞', save=True)
-    countour_data_plot(xx, yy, vel[1, :, :], 'Normalized y velocity', 'v/U_∞', save=True)
-    countour_data_plot(xx, yy, vel[2, :, :], 'Normalized z velocity', 'w/U_∞', save=True)
+    countour_data_plot(xx, yy, vel[0, :, :], 'Normalized x velocity', 'u/U', save=True)
+    countour_data_plot(xx, yy, vel[1, :, :], 'Normalized y velocity', 'v/U', save=True)
+    countour_data_plot(xx, yy, vel[2, :, :], 'Normalized z velocity', 'w/U', save=True)
 
     # vortex detection preliminaries
     u_grad, v_grad, w_grad = vorticity_strain.velocity_gradients(vel)
@@ -28,11 +28,11 @@ if __name__ == '__main__':
 
     # plot strain and vorticity
     countour_data_plot(xx, yy, strain, 'Strain', r'S', save=True)
-    countour_data_plot(xx, yy, vorticity_value, 'Vorticity', r'Ω [1\s]', save=True)
+    countour_data_plot(xx, yy, vorticity_value, 'Vorticity', 'Omega [1\s]', save=True)
 
     # vortex detection methods
     q = vortex_detection.q_test(vort_tens, strain_tensor)
     countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=True)
 
     delta = vortex_detection.delta_test(u_grad, v_grad)
-    countour_data_plot(xx, yy, delta, 'Delta vortex detection', r'Δ', save=True)
+    countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=True)
