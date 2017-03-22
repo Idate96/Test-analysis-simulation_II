@@ -9,15 +9,19 @@ if __name__ == '__main__':
     x, y, vel = load_data(exp)
     xx, yy = np.meshgrid(x, y)
 
+    # quiver plot
+    quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
+                     'Normalized z velocity', 'w/U', save=False)
+
     # 3d plotting
     plot_data_3d(xx, yy, vel[0, :, :])
     plot_data_3d(xx, yy, vel[1, :, :])
     plot_data_3d(xx, yy, vel[2, :, :])
 
     # countour plotting
-    countour_data_plot(xx, yy, vel[0, :, :], 'Normalized x velocity', 'u/U', save=True)
-    countour_data_plot(xx, yy, vel[1, :, :], 'Normalized y velocity', 'v/U', save=True)
-    countour_data_plot(xx, yy, vel[2, :, :], 'Normalized z velocity', 'w/U', save=True)
+    countour_data_plot(xx, yy, vel[0, :, :], 'Normalized x velocity', 'u/U', save=False)
+    countour_data_plot(xx, yy, vel[1, :, :], 'Normalized y velocity', 'v/U', save=False)
+    countour_data_plot(xx, yy, vel[2, :, :], 'Normalized z velocity', 'w/U', save=False)
 
     # vortex detection preliminaries
     u_grad, v_grad, w_grad = vorticity_strain.velocity_gradients(vel)
@@ -27,12 +31,12 @@ if __name__ == '__main__':
     strain_tensor = vorticity_strain.contruct_strain_tensor(u_grad, v_grad)
 
     # plot strain and vorticity
-    countour_data_plot(xx, yy, strain, 'Strain', r'S', save=True)
-    countour_data_plot(xx, yy, vorticity_value, 'Vorticity', 'Omega [1\s]', save=True)
+    countour_data_plot(xx, yy, strain, 'Strain', r'S', save=False)
+    countour_data_plot(xx, yy, vorticity_value, 'Vorticity', 'Omega [1\s]', save=False)
 
     # vortex detection methods
     q = vortex_detection.q_test(vort_tens, strain_tensor)
-    countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=True)
+    countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=False)
 
     delta = vortex_detection.delta_test(u_grad, v_grad)
-    countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=True)
+    countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=False)
