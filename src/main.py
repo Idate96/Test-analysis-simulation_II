@@ -30,7 +30,8 @@ if __name__ == '__main__':
     strain = vorticity_strain.find_strain(u_grad, v_grad)
     vort_tens = vorticity_strain.construct_vorticity_tensor(u_grad, v_grad)
     strain_tensor = vorticity_strain.contruct_strain_tensor(u_grad, v_grad)
-
+    quiver_data_plot(xx, yy, vorticity_value, vel[:2, :, :],
+                 'Vorticity', 'w/U', save=False)
     # plot strain and vorticity
     countour_data_plot(xx, yy, strain, 'Strain', r'S', save=False)
     countour_data_plot(xx, yy, vorticity_value, 'Vorticity', 'Omega [1\s]', save=False)
