@@ -69,7 +69,6 @@ def discrete_method(velocity):
         velocity (np array) = velocity components in the grid.
     """
 
-
     # The position  indices of the vortex centers will be stored in a list.
     vortex_center_indices = []
     u_vel = velocity[0]
@@ -77,19 +76,19 @@ def discrete_method(velocity):
     w_vel = velocity[2]
     rows, columns = np.shape(u_vel)
 
-    for i in range(1, rows-1):
-        for j in range(1, columns-1):
+    for i in range(1, rows - 1):
+        for j in range(1, columns - 1):
             print(i)
             print(j)
-
 
             # vel0 = velocity[j, k]  # velocity of the actual point
             # vel1 = velocity[i - 1, j]  # velocity of the left point
             # vel2 = velocity[i, j + 1]  # velocity of the top point
             # vel3 = velocity[i + 1, j]  # velocity of the right point
             # vel4 = velocity[i, j - 1]  # velocity of the bottom point
-            check1 = np.sign(u_vel[i-1, j]) + np.sign(u_vel[i+1, j]) + np.sign(v_vel[i, j+1]) + np.sign(v_vel[i, j-1])
-            check2 = np.sign(u_vel[i-1, j]) + np.sign(v_vel[i, j+1])
+            check1 = np.sign(u_vel[i - 1, j]) + np.sign(u_vel[i + 1, j]) + \
+                np.sign(v_vel[i, j + 1]) + np.sign(v_vel[i, j - 1])
+            check2 = np.sign(u_vel[i - 1, j]) + np.sign(v_vel[i, j + 1])
             print(check1)
             if (check1 == 0.) and (check2 != 0.):
                 vortex_center_indices.append((i, j))
