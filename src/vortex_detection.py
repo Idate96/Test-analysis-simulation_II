@@ -32,9 +32,6 @@ def delta_test(u_grad, v_grad):
             delta[i, j] = ((q[i, j] / 3) ** 3 + (np.linalg.det(jacobian[:, :, i, j]) / 2) ** 2)
     return delta
 
-
-<<<<<<< HEAD
-=======
 def lambda_test(vorticity_tens, strain_tens):
     """This does not work in 2d."""
     vort_tens_sq = np.empty(np.shape(vorticity_tens))
@@ -55,8 +52,6 @@ def lambda_test(vorticity_tens, strain_tens):
 
     return eigenvalues[:, :, 0]
 
-
->>>>>>> 190fb8a45ee6a716c9371508aae04f7507d91465
 def discrete_method(velocity):
     """This module uses a discrete method to determine vortex centers.
 
