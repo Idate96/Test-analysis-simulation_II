@@ -34,7 +34,7 @@ def find_vorticity(u_grad, v_grad):
     Returns:
         vorticity_01 (np.array :shape(*(shape_grid))) = component of the vorticity tensor
     """
-    vorticity_01 = 0.5 * (u_grad[1] - v_grad[0])
+    vorticity_01 = 0.5 * (u_grad[0] - v_grad[1])
     return vorticity_01
 
 
@@ -86,7 +86,6 @@ def contruct_strain_tensor(u_grad, v_grad):
     return strain_tensor
 
 if __name__ == '__main__':
-    pass
     # x, y, vel = load_data('04')
     # xx, yy = np.meshgrid(x, y)
     # u_grad, v_grad, w_grad = velocity_gradients(vel)
@@ -104,3 +103,4 @@ if __name__ == '__main__':
 
     # delta = vortex_detection.delta_test(u_grad, v_grad)
     # countour_data_plot(xx, yy, delta)
+    pass

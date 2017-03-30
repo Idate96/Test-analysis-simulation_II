@@ -183,7 +183,7 @@ def quiver_data_plot(xx, yy, data, plane_vector, *args, vortex_centers = None, s
     """Quiver plot."""
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111)
-    cs = plt.contourf(xx, yy, data, 10, cmap=cm.bone, origin='lower')
+    cs = plt.contourf(xx, yy, data, 10, cmap=cm.bone, origin='upper')
     mag_plane_vel = (plane_vector[0, :, :] ** 2 + plane_vector[1, :, :] ** 2) ** 0.5
     max = np.nanmax(mag_plane_vel)
     Q = plt.quiver(xx, yy, plane_vector[0], plane_vector[1], units='width', pivot='tip', scale=5)
