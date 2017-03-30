@@ -52,6 +52,9 @@ if __name__ == '__main__':
     quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
                      'Normalized z velocity', 'w/U', vortex_centers=vortex_detection.discrete_method(vel),
                      save=True)
+    quiver_data_plot(xx, yy, vorticity_value, vel[:2, :, :],
+                     'Vorticity', 'Omega [1\s]', vortex_centers=vortex_detection.discrete_method(vel),
+                     save=True)
 
     # vortex detection
     q = vortex_detection.q_test(vort_tens, strain_tensor)
