@@ -80,8 +80,8 @@ def contruct_strain_tensor(u_grad, v_grad):
     """
     strain = find_strain(u_grad, v_grad)
     strain_tensor = np.zeros((2, 2, *np.shape(strain)))
-    strain_tensor[0, 0] = u_grad[0]
-    strain_tensor[1, 1] = v_grad[1]
+    strain_tensor[0, 0] = u_grad[1]
+    strain_tensor[1, 1] = v_grad[0]
     strain_tensor[1, 0] = strain_tensor[0, 1] = strain
     return strain_tensor
 
