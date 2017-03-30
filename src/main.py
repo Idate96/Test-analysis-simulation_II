@@ -8,7 +8,7 @@ if __name__ == '__main__':
     # scaling parameter for vortcity
     L = 0.5
     # load position and velocity
-    exp = '16'
+    exp = '04'
     x, y, vel = load_data(exp)
     xx, yy = np.meshgrid(x, y)
 
@@ -52,14 +52,17 @@ if __name__ == '__main__':
     quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
                      'Normalized z velocity', 'w/U', vortex_centers=vortex_detection.discrete_method(vel),
                      save=True)
+    quiver_data_plot(xx, yy, vorticity_value, vel[:2, :, :],
+                     'Vorticity', 'Omega [1\s]', vortex_centers=vortex_detection.discrete_method(vel),
+                     save=True)
 
     # vortex detection
     q = vortex_detection.q_test(vort_tens, strain_tensor)
     mask = np.where(q > 0)
     q[mask] *= 10
-    countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=False)
+    countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=True)
 
     delta = vortex_detection.delta_test(u_grad, v_grad)
     mask = np.where(delta > 0)
     delta[mask] *= 10
-    countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=False)
+    countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=True)
