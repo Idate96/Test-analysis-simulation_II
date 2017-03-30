@@ -205,7 +205,9 @@ def quiver_data_plot(xx, yy, data, plane_vector, *args, vortex_centers = None, s
         plt.show()
 
 def AddMannequin():
+    '''plot for mannequin'''
     img = imread(dir_path + '/../images/ContourMannequin.png')
+    # Adjust axis according to needs...
     plt.axis([-35,35,50,135])
     plt.imshow(img,zorder=1, extent=[-28, 28, -3, 140])
 

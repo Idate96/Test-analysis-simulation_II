@@ -42,21 +42,25 @@ if __name__ == '__main__':
     strain_tensor = vorticity_strain.contruct_strain_tensor(u_grad, v_grad)
 
     # Quiver with vorticity overlap
-    #quiver_data_plot(xx, yy, vorticity_value, vel[:2, :, :], 'Vorticity', 'w/U', save=False)
+    quiver_data_plot(xx, yy, vorticity_value, vel[:2, :, :], 'Vorticity', 'w/U', save=False)
 
     # plot strain and vorticity
-    #countour_data_plot(xx, yy, strain, 'Strain', r'S', save=False)
-    #countour_data_plot(xx, yy, vorticity_value, 'Vorticity', 'Omega [1\s]', save=False)
-    #vortexcenter_scatter_plot(xx, yy, vorticity_value, vortex_detection.discrete_method(
-    #    vel), 'Vorticity', 'Omega [1\s]', save=False)
-    #quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
-    #                 'Normalized z velocity', 'w/U', vortex_centers=vortex_detection.discrete_method(vel),
-#                     save=True, show=True)
+    countour_data_plot(xx, yy, strain, 'Strain', r'S', save=False)
+    countour_data_plot(xx, yy, vorticity_value, 'Vorticity', 'Omega [1\s]', save=False)
+    vortexcenter_scatter_plot(xx, yy, vorticity_value, vortex_detection.discrete_method(
+        vel), 'Vorticity', 'Omega [1\s]', save=False)
+    quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
+                     'Normalized z velocity', 'w/U', vortex_centers=vortex_detection.discrete_method(vel),
+                     save=True, show=True)
 
     quiver_data_plot(xx, yy, vorticity_value, vel[:2, :, :],
                      'Vorticity', 'Omega [1\s]', vortex_centers=vortex_detection.discrete_method(vel),
                      save=True, show=False)
+    
+    # Add mannequin: put show=False in plot you want to see the mannequin in
     AddMannequin()
+
+
     # vortex detection
     q = vortex_detection.q_test(vort_tens, strain_tensor)
     mask = np.where(q > 0)
