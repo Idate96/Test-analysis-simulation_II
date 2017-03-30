@@ -32,10 +32,7 @@ def delta_test(u_grad, v_grad):
             delta[i, j] = ((q[i, j] / 3) ** 3 + (np.linalg.det(jacobian[:, :, i, j]) / 2) ** 2)
     return delta
 
-<<<<<<< HEAD
-=======
 
->>>>>>> cdf6270b52ab6e729b4dcbe9ecf3134916a4c5bd
 def lambda_test(vorticity_tens, strain_tens):
     """This does not work in 2d."""
     vort_tens_sq = np.empty(np.shape(vorticity_tens))
@@ -56,10 +53,6 @@ def lambda_test(vorticity_tens, strain_tens):
 
     return eigenvalues[:, :, 0]
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cdf6270b52ab6e729b4dcbe9ecf3134916a4c5bd
 def discrete_method(velocity):
     """This module uses a discrete method to determine vortex centers.
 
@@ -94,12 +87,38 @@ def discrete_method(velocity):
             check1 = np.sign(u_vel[i - 1, j]) + np.sign(u_vel[i + 1, j]) + \
                 np.sign(v_vel[i, j + 1]) + np.sign(v_vel[i, j - 1])
             check2 = np.sign(u_vel[i - 1, j]) + np.sign(v_vel[i, j + 1])
-
-            if (check1 == 0.) and (check2 != 0.):
+            a = i
+            b = j
+            while check1 ==0 and check2 != 0:
                 strength = abs(u_vel[i - 1, j]) + abs(u_vel[i + 1, j]) + \
                     abs(v_vel[i, j + 1]) + abs(v_vel[i, j - 1])
-                vortex_center_indices.append((i, j, strength))
+                vortex_center_indices.append((i,j,strength))
+                i = i+1
+                check1 = np.sign(u_vel[i - 1, j]) + np.sign(u_vel[i + 1, j]) + \
+                    np.sign(v_vel[i, j + 1]) + np.sign(v_vel[i, j - 1])
+                check2 = np.sign(u_vel[i - 1, j]) + np.sign(v_vel[i, j + 1])
+
+            i = a
+
+            while check1 ==0 and check2 != 0:
+                strength = abs(u_vel[i - 1, j]) + abs(u_vel[i + 1, j]) + \
+                    abs(v_vel[i, j + 1]) + abs(v_vel[i, j - 1])
+                vortex_center_indices.append((i,j,strength))
+                j = j+1
+                check1 = np.sign(u_vel[i - 1, j]) + np.sign(u_vel[i + 1, j]) + \
+                    np.sign(v_vel[i, j + 1]) + np.sign(v_vel[i, j - 1])
+                check2 = np.sign(u_vel[i - 1, j]) + np.sign(v_vel[i, j + 1])
+
+            j = b
+
+            # if (check1 == 0.) and (check2 != 0.):
+            #     strength = abs(u_vel[i - 1, j]) + abs(u_vel[i + 1, j]) + \
+            #         abs(v_vel[i, j + 1]) + abs(v_vel[i, j - 1])
+            #
+            #
+            #     vortex_center_indices.append((i, j, strength))
     return vortex_center_indices
+
 
 if __name__ == '__main__':
     pass

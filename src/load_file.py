@@ -162,11 +162,11 @@ def vortexcenter_scatter_plot(xx, yy, data, centers, *args, save=False, show=Tru
         i,j,strength = point
         x = xx[i, j]
         y = yy[i, j]
-        strengthlst.append(strength*100)
+        strengthlst.append(strength**4*300000)
         xlst.append(x)
         ylst.append(y)
 
-    plt.scatter(xlst,ylst, s = strengthlst)
+    plt.scatter(xlst,ylst, s = strengthlst, c = 'red')
 
     # ax.set_ylabel('y')
     if args:

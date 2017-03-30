@@ -28,8 +28,8 @@ if __name__ == '__main__':
     # countour_data_plot(xx, yy, vel[2, :, :], 'Normalized z velocity', 'w/U', save=False)
     #
 
-    quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
-                     'Normalized z velocity', 'w/U', save=True)
+    #quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
+                     #'Normalized z velocity', 'w/U', save=True)
 
     # vortex detection preliminaries
     u_grad, v_grad, w_grad = vorticity_strain.velocity_gradients(vel)
@@ -42,13 +42,13 @@ if __name__ == '__main__':
     strain_tensor = vorticity_strain.contruct_strain_tensor(u_grad, v_grad)
 
     # Quiver with vorticity overlap
-    quiver_data_plot(xx, yy, vorticity_value, vel[:2, :, :], 'Vorticity', 'w/U', save=False)
+    #quiver_data_plot(xx, yy, vorticity_value, vel[:2, :, :], 'Vorticity', 'w/U', save=False)
 
     # plot strain and vorticity
-    countour_data_plot(xx, yy, strain, 'Strain', r'S', save=False)
-    countour_data_plot(xx, yy, vorticity_value, 'Vorticity', 'Omega [1\s]', save=False)
-    vortexcenter_scatter_plot(xx, yy, vorticity_value, vortex_detection.discrete_method(
-        vel), 'Vorticity', 'Omega [1\s]', save=False)
+    #countour_data_plot(xx, yy, strain, 'Strain', r'S', save=False)
+    #countour_data_plot(xx, yy, vorticity_value, 'Vorticity', 'Omega [1\s]', save=False)
+    #vortexcenter_scatter_plot(xx, yy, vorticity_value, vortex_detection.discrete_method(
+        #vel), 'Vorticity', 'Omega [1\s]', save=False)
     quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
                      'Normalized z velocity', 'w/U', vortex_centers=vortex_detection.discrete_method(vel),
                      save=True)
@@ -57,9 +57,9 @@ if __name__ == '__main__':
     q = vortex_detection.q_test(vort_tens, strain_tensor)
     mask = np.where(q > 0)
     q[mask] *= 10
-    countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=False)
+    #countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=False)
 
     delta = vortex_detection.delta_test(u_grad, v_grad)
     mask = np.where(delta > 0)
     delta[mask] *= 10
-    countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=False)
+    #countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=False)
