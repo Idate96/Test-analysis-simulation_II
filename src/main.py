@@ -29,11 +29,8 @@ if __name__ == '__main__':
     #
 
     #quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
-<<<<<<< HEAD
                      #'Normalized z velocity', 'w/U', save=True)
-=======
-    #                 'Normalized z velocity', 'w/U', save=True)
->>>>>>> 79415eed91d37ac9b2db4587047d686544e3ada0
+
 
     # vortex detection preliminaries
     u_grad, v_grad, w_grad = vorticity_strain.velocity_gradients(vel)
