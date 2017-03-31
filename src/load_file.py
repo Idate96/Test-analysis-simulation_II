@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 from matplotlib import cm
 import vortex_detection
-
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+from scipy.misc import imread
 # loading the data (StD_vel04)
 
 
@@ -202,6 +203,13 @@ def quiver_data_plot(xx, yy, data, plane_vector, *args, vortex_centers = None, s
         plt.savefig(dir_path + '/../images/' + args[0] + '.png', bbox_inches='tight')
     if show:
         plt.show()
+
+def AddMannequin():
+    '''plot for mannequin'''
+    img = imread(dir_path + '/../images/ContourMannequin.png')
+    # Adjust axis according to needs...
+    plt.axis([-35,35,50,135])
+    plt.imshow(img,zorder=1, extent=[-28, 28, -3, 140])
 
 if __name__ == '__main__':
     pass

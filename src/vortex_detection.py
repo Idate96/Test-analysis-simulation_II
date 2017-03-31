@@ -53,6 +53,10 @@ def lambda_test(vorticity_tens, strain_tens):
 
     return eigenvalues[:, :, 0]
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 79415eed91d37ac9b2db4587047d686544e3ada0
 def discrete_method(velocity):
     """This module uses a discrete method to determine vortex centers.
 
