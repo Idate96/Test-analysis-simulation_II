@@ -29,7 +29,7 @@ def load(x, y, location):
     return data[numb_loc]
 
 
-def parse_structured_grid(data):
+def parse_structured_grid(data, row_missing=True):
     """Parse and reorganize a structured grid.
 
     Args:
@@ -56,15 +56,16 @@ def parse_structured_grid(data):
                 columns = i - columns
             rows += 1
     # fist row is missing replace it with fictional value
-    fict_value = np.array((data[columns - 1, 0], data[0, 1]))
-    data = np.vstack((fict_value, data))
+    if row_missing:
+        fict_value = np.array((data[columns - 1, 0], data[0, 1]))
+        data = np.vstack((fict_value, data))
     # assumed structured grid
     x = data[:columns, 0]
     y = data[::columns, 1]
     return x, y, (rows, columns)
 
 
-def load_data(experiment):
+def load_data(experiment, zeros=False):
     """Load the experimental data.
 
     Args:
@@ -76,14 +77,17 @@ def load_data(experiment):
 
     """
     try:
-        if experiment not in ['16', '04']:
+        if experiment not in ["Velocity_16", "Velocity_04", "StD_vel04", "StD_vel16"]:
             raise ValueError()
     except ValueError:
         print("Choose between '16' or '04'")
-    data = np.loadtxt(dir_path + "/../exp_data/Velocity_" + experiment + ".plt", skiprows=4)
+    data = np.loadtxt(dir_path + "/../exp_data/" + experiment + ".plt", skiprows=4)
     # select columns data reppresenting position
     position = data[:, :2]
-    velocity = remove_zeros(data[:, 3:])
+    if not zeros:
+        velocity = remove_zeros(data[:, 3:])
+    else:
+        velocity = data[:, 3:]
     x, y, dim = parse_structured_grid(position)
     # data is missing one row
     first_row = np.array((0))
@@ -148,6 +152,7 @@ def countour_data_plot(xx, yy, data, *args, save=False, show=True):
     if show:
         plt.show()
 
+
 def vortexcenter_scatter_plot(xx, yy, data, centers, *args, save=False, show=True, new_plot=True):
     if new_plot:
         fig = plt.figure(figsize=(10, 8))
@@ -160,14 +165,14 @@ def vortexcenter_scatter_plot(xx, yy, data, centers, *args, save=False, show=Tru
     ylst = []
     strengthlst = []
     for point in centers:
-        i,j,strength = point
+        i, j, strength = point
         x = xx[i, j]
         y = yy[i, j]
-        strengthlst.append(strength*100)
+        strengthlst.append(strength * 100)
         xlst.append(x)
         ylst.append(y)
 
-    plt.scatter(xlst,ylst, s = strengthlst)
+    plt.scatter(xlst, ylst, s=strengthlst)
 
     # ax.set_ylabel('y')
     if args:
@@ -179,8 +184,7 @@ def vortexcenter_scatter_plot(xx, yy, data, centers, *args, save=False, show=Tru
         plt.show()
 
 
-
-def quiver_data_plot(xx, yy, data, plane_vector, *args, vortex_centers = None, save=False, show=True):
+def quiver_data_plot(xx, yy, data, plane_vector, *args, vortex_centers=None, save=False, show=True):
     """Quiver plot."""
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111)
@@ -191,7 +195,7 @@ def quiver_data_plot(xx, yy, data, plane_vector, *args, vortex_centers = None, s
     qk = plt.quiverkey(Q, 0.9, 0.9, max, r'{0:.2f} m/s' .format(max), labelpos='E',
                        coordinates='figure')
     if vortex_centers:
-        vortexcenter_scatter_plot(xx,yy,data,vortex_centers, show=False, new_plot=False)
+        vortexcenter_scatter_plot(xx, yy, data, vortex_centers, show=False, new_plot=False)
     ax.set_xlabel('x')
     # ax.set_ylabel('y')
     fig.colorbar(cs)
@@ -204,12 +208,37 @@ def quiver_data_plot(xx, yy, data, plane_vector, *args, vortex_centers = None, s
     if show:
         plt.show()
 
+
 def AddMannequin():
     '''plot for mannequin'''
     img = imread(dir_path + '/../images/ContourMannequin.png')
     # Adjust axis according to needs...
-    plt.axis([-35,35,50,135])
-    plt.imshow(img,zorder=1, extent=[-28, 28, -3, 140])
+    plt.axis([-35, 35, 50, 135])
+    plt.imshow(img, zorder=1, extent=[-28, 28, -3, 140])
+
+
+def load_stress(file_name, zeros=False):
+    """Load the experimental data.
+
+    Args:
+        experiment (str) = experiment label indicating U_∞
+    Returns:
+        x (np.array) = 1d array of coordinates of the dof
+        y (np.array) = 1d array of the y coordinates of the dof
+        stress (np.array : shape (1, # x dof, # y dof)) = stress[0,i,j] is the stress of the point_ij
+
+    """
+    data = np.loadtxt(dir_path + "/../exp_data/Re/" + file_name, skiprows=3)
+    # select columns data reppresenting position
+    position = data[:, :2]
+    if not zeros:
+        stress = remove_zeros(data[:, 3:])
+    else:
+        stress = data[:, 3:]
+    x, y, dim = parse_structured_grid(position, row_missing=False)
+    stress = stress.reshape(dim)
+    return x, y, stress
+
 
 if __name__ == '__main__':
     pass

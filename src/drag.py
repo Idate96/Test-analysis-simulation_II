@@ -25,8 +25,8 @@ def simpson_quad_2d(func, domain):
 def convective_drag(w, U, domain):
     rho = 1.225
     integrand = w * (1 - w)
-    drag_conv = rho * U * simpson_quad_2d(integrand, domain)
-    return convective_drag
+    drag_conv = rho * U ** 2 * simpson_quad_2d(integrand, domain)
+    return drag_conv
 
 
 def test_func(x, y):
