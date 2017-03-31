@@ -210,6 +210,7 @@ def AddMannequin():
     # Adjust axis according to needs...
     plt.axis([-35,35,50,135])
     plt.imshow(img,zorder=1, extent=[-28, 28, -3, 140])
+    plt.show()
 
 if __name__ == '__main__':
     pass

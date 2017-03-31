@@ -69,17 +69,13 @@ if __name__ == '__main__':
     q = vortex_detection.q_test(vort_tens, strain_tensor)
     mask = np.where(q > 0)
     q[mask] *= 10
-<<<<<<< HEAD
-    #countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=False)
-=======
-    countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=True)
->>>>>>> 79415eed91d37ac9b2db4587047d686544e3ada0
+    countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=True, show=False)
+
+    AddMannequin()
 
     delta = vortex_detection.delta_test(u_grad, v_grad)
     mask = np.where(delta > 0)
     delta[mask] *= 10
-<<<<<<< HEAD
-    #countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=False)
-=======
-    countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=True)
->>>>>>> 79415eed91d37ac9b2db4587047d686544e3ada0
+    countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=True, show=False)
+
+    AddMannequin()
