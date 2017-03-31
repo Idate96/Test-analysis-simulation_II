@@ -8,7 +8,7 @@ if __name__ == '__main__':
     # scaling parameter for vortcity
     L = 0.5
     # load position and velocity
-    exp = '16'
+    exp = 'Velocity_16'
     x, y, vel = load_data(exp)
     xx, yy = np.meshgrid(x, y)
 
