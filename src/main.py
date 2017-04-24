@@ -28,9 +28,20 @@ if __name__ == '__main__':
     countour_data_plot(xx, yy, vel[2, :, :], 'Normalized z velocity', 'w/U', save=False)
     #
 
+<<<<<<< HEAD
     quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
                      'Normalized z velocity', 'w/U', save=False)
 
+=======
+
+    quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
+                     'Normalized z velocity', 'w/U', save=False)
+
+    #quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
+                     #'Normalized z velocity', 'w/U', save=True)
+
+
+>>>>>>> 7b2d8e207af806672d5155d89bdd21afc2504fea
 
     # vortex detection preliminaries
     u_grad, v_grad, w_grad = vorticity_strain.velocity_gradients(vel)
@@ -52,21 +63,48 @@ if __name__ == '__main__':
         vel), 'Vorticity', 'Omega [1\s]', save=False)
     quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
                      'Normalized z velocity', 'w/U', vortex_centers=vortex_detection.discrete_method(vel),
-                     save=False)
+                      save=True, show=False)
+
+    # Add mannequin: put show=False in plot you want to see the mannequin in
+    AddMannequin()
+
+    quiver_data_plot(xx, yy, vorticity_value, vel[:2, :, :],
+                     'Vorticity', 'Omega [1\s]', vortex_centers=vortex_detection.discrete_method(vel),
+                     save=True, show=False)
+
+    # Add mannequin: put show=False in plot you want to see the mannequin in
+    AddMannequin()
+
+
+
 
     # vortex detection
     q = vortex_detection.q_test(vort_tens, strain_tensor)
     mask = np.where(q > 0)
     q[mask] *= 10
 
+<<<<<<< HEAD
     countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=True, show=False)
 
     AddMannequin()
+=======
+    #countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=False)
+
+    countour_data_plot(xx, yy, q, 'Q test vortex detection', 'Q', save=True, show=False)
+
+    AddMannequin()
+
+>>>>>>> 7b2d8e207af806672d5155d89bdd21afc2504fea
 
     delta = vortex_detection.delta_test(u_grad, v_grad)
     mask = np.where(delta > 0)
     delta[mask] *= 10
 
+<<<<<<< HEAD
+=======
+    #countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=False)
+
+>>>>>>> 7b2d8e207af806672d5155d89bdd21afc2504fea
     countour_data_plot(xx, yy, delta, 'Delta vortex detection', 'Delta', save=True, show=False)
 
     AddMannequin()
