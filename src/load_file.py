@@ -115,7 +115,7 @@ def plot_data_3d(xx, yy, data, save=False, show=True, *args):
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111, projection='3d')
     p = ax.plot_surface(xx, yy, data, rstride=1, cstride=1, linewidth=0,
-                        cmap=cm.bone, vmin=np.nanmin(data), vmax=np.nanmax(data))
+                        cmap=cm.OrRd, vmin=np.nanmin(data), vmax=np.nanmax(data))
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     fig.colorbar(p)
@@ -135,7 +135,7 @@ def plot_data_3d(xx, yy, data, save=False, show=True, *args):
 def countour_data_plot(xx, yy, data, *args, save=False, show=True):
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111)
-    cs = plt.contourf(xx, yy, data, 10, cmap=cm.bone, origin='lower')
+    cs = plt.contourf(xx, yy, data, 10, cmap=cm.OrRd, origin='lower')
     ax.set_xlabel('x')
     # ax.set_ylabel('y')
     fig.colorbar(cs)
@@ -152,7 +152,7 @@ def vortexcenter_scatter_plot(xx, yy, data, centers, *args, save=False, show=Tru
     if new_plot:
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111)
-        cs = plt.contourf(xx, yy, data, 10, cmap=cm.bone, origin='lower')
+        cs = plt.contourf(xx, yy, data, 10, cmap=cm.OrRd, origin='lower')
         fig.colorbar(cs)
         ax.set_xlabel('x')
 
@@ -184,10 +184,11 @@ def quiver_data_plot(xx, yy, data, plane_vector, *args, vortex_centers = None, s
     """Quiver plot."""
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111)
-    cs = plt.contourf(xx, yy, data, 10, cmap=cm.bone, origin='upper')
+    cs = plt.contourf(xx, yy, data, 10, cmap=cm.OrRd, origin='upper')
     mag_plane_vel = (plane_vector[0, :, :] ** 2 + plane_vector[1, :, :] ** 2) ** 0.5
     max = np.nanmax(mag_plane_vel)
-    Q = plt.quiver(xx, yy, plane_vector[0], plane_vector[1], units='width', pivot='tip', scale=5)
+    skip=(slice(None,None,2),slice(None,None,2))
+    Q = plt.quiver(xx[skip], yy[skip], plane_vector[0][skip], plane_vector[1][skip], units='width', pivot='tip', scale=5)
     qk = plt.quiverkey(Q, 0.9, 0.9, max, r'{0:.2f} m/s' .format(max), labelpos='E',
                        coordinates='figure')
     if vortex_centers:
