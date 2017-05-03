@@ -132,10 +132,11 @@ def plot_data_3d(xx, yy, data, save=False, show=True, *args):
     plt.show()
 
 
-def countour_data_plot(xx, yy, data, *args, save=False, show=True):
+def countour_data_plot(xx, yy, data, color, *args, save=False, show=True):
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111)
-    cs = plt.contourf(xx, yy, data, 20, cmap=cm.OrRd, origin='lower')
+    #scheme = 'cm.' + color
+    cs = plt.contourf(xx, yy, data, 20, cmap=color, origin='lower')
     ax.set_xlabel('x')
     # ax.set_ylabel('y')
     fig.colorbar(cs)
@@ -152,7 +153,7 @@ def vortexcenter_scatter_plot(xx, yy, data, centers, *args, save=False, show=Tru
     if new_plot:
         fig = plt.figure(figsize=(10, 8))
         ax = fig.add_subplot(111)
-        cs = plt.contourf(xx, yy, data, 20, cmap=cm.OrRd, origin='lower')
+        cs = plt.contourf(xx, yy, data, 20, cmap=cm.BrBG, origin='lower')
         fig.colorbar(cs)
         ax.set_xlabel('x')
 
@@ -180,11 +181,11 @@ def vortexcenter_scatter_plot(xx, yy, data, centers, *args, save=False, show=Tru
 
 
 
-def quiver_data_plot(xx, yy, data, plane_vector, *args, vortex_centers = None, save=False, show=True):
+def quiver_data_plot(xx, yy, data, plane_vector, color, *args, vortex_centers = None, save=False, show=True):
     """Quiver plot."""
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111)
-    cs = plt.contourf(xx, yy, data, 20, cmap=cm.OrRd, origin='upper')
+    cs = plt.contourf(xx, yy, data, 20, cmap=color, origin='upper')
     mag_plane_vel = (plane_vector[0, :, :] ** 2 + plane_vector[1, :, :] ** 2) ** 0.5
     max = np.nanmax(mag_plane_vel)
     skip=(slice(None, None, 2),slice(None, None, 2))
