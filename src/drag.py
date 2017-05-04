@@ -62,30 +62,44 @@ def test_func(x, y):
     return 1 - 2 * x ** 4 - y ** 2
 
 
-def pressure_term(u, v, u_grad, v_grad, domain, re_stress):
+def pressure_term(u, v, u_grad, v_grad, domain, re_stress, U):
 
     pressure = np.zeros(np.shape(u))
     pressure[:, 0] = 0
     u_hess = vorticity_strain.hessian(u)
     # v_hess = vorticity_strain.hessian(v)
-    grad_re_stress_00 = np.asarray(np.gradient(re_stress[0, 0]))
-    grad_re_stress_01 = np.asarray(np.gradient(re_stress[0, 1]))
+    grad_re_stress_00 = np.asarray(np.gradient(re_stress[0, 0]))*U
+    grad_re_stress_01 = np.asarray(np.gradient(re_stress[0, 1]))*U
+    u = U*u
+    v = U*v
     rho = 1.225
     mu = 18.27 * 10 ** (-6)
     x, y = domain
     dx = x[1] - x[0]  # constant spacing
 
+    # now integrating from right domiain range(,,-1) and -dx in the integrator
     for i in range(np.size(y) - 2, 0, -1):
         for j in range(np.size(x) - 2, 0, -1):
             rhs_1 = -rho * (u[i, j] * u_grad[1, i, j] + v[i, j] * v_grad[0, i, j])
             rhs_2 = -rho * (grad_re_stress_00[1, i, j] + grad_re_stress_01[0, i, j])
             rhs_3 = mu * (u_hess[0, 0, i, j] + u_hess[1, 1, i, j])
             rhs = rhs_1 + rhs_2 + rhs_3
-            print(rhs)
             pressure[i, j - 1] = forward_euler(rhs, pressure[i, j], -dx)
             # pressure[i+1,j+1] = 1
+    # the pressure term has units of Pa * s/ m (since gradient and velocity dimensionless)
     return pressure
 
+
+def pressure_drag(pressure, pressure_inf, domain):
+    integrand = pressure_inf - pressure
+    drag_pressure = simpson_quad_2d(integrand, domain)
+    return drag_pressure
+
+
+def fluctuation_drag(std_streamwise, domain):
+    rho = 1.225
+    drag = rho * simpson_quad_2d(std_streamwise, domain)
+    return drag
 
 if __name__ == '__main__':
     # x, y = np.linspace(-2, 2, 31), np.linspace(0, 1, 51)

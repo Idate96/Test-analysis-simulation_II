@@ -88,12 +88,38 @@ def discrete_method(velocity):
             check1 = np.sign(u_vel[i - 1, j]) + np.sign(u_vel[i + 1, j]) + \
                 np.sign(v_vel[i, j + 1]) + np.sign(v_vel[i, j - 1])
             check2 = np.sign(u_vel[i - 1, j]) + np.sign(v_vel[i, j + 1])
-
-            if (check1 == 0.) and (check2 != 0.):
+            a = i
+            b = j
+            while check1 ==0 and check2 != 0:
                 strength = abs(u_vel[i - 1, j]) + abs(u_vel[i + 1, j]) + \
                     abs(v_vel[i, j + 1]) + abs(v_vel[i, j - 1])
-                vortex_center_indices.append((i, j, strength))
+                vortex_center_indices.append((i,j,strength))
+                i = i+1
+                check1 = np.sign(u_vel[i - 1, j]) + np.sign(u_vel[i + 1, j]) + \
+                    np.sign(v_vel[i, j + 1]) + np.sign(v_vel[i, j - 1])
+                check2 = np.sign(u_vel[i - 1, j]) + np.sign(v_vel[i, j + 1])
+
+            i = a
+
+            while check1 ==0 and check2 != 0:
+                strength = abs(u_vel[i - 1, j]) + abs(u_vel[i + 1, j]) + \
+                    abs(v_vel[i, j + 1]) + abs(v_vel[i, j - 1])
+                vortex_center_indices.append((i,j,strength))
+                j = j+1
+                check1 = np.sign(u_vel[i - 1, j]) + np.sign(u_vel[i + 1, j]) + \
+                    np.sign(v_vel[i, j + 1]) + np.sign(v_vel[i, j - 1])
+                check2 = np.sign(u_vel[i - 1, j]) + np.sign(v_vel[i, j + 1])
+
+            j = b
+
+            # if (check1 == 0.) and (check2 != 0.):
+            #     strength = abs(u_vel[i - 1, j]) + abs(u_vel[i + 1, j]) + \
+            #         abs(v_vel[i, j + 1]) + abs(v_vel[i, j - 1])
+            #
+            #
+            #     vortex_center_indices.append((i, j, strength))
     return vortex_center_indices
+
 
 if __name__ == '__main__':
     pass

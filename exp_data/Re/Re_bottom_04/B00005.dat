@@ -1,4 +1,4 @@
-TITLE = "B00005_ReynoldsStressYY"
+ITLE = "B00005_ReynoldsStressYY"
 VARIABLES = "X", "Y", "Z", "Reynolds stress YY"
 ZONE T="Frame 1" I=75, J=67, K=4, F=POINT
 -466.046997 452.712006 -43.379002 0.000000
