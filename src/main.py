@@ -8,6 +8,7 @@ if __name__ == '__main__':
     # scaling parameter for vortcity
     L = 0.5
     # load position and velocity
+
     exp = '04'
     x, y, vel = load_data(exp)
     c_exp = '0903'
@@ -30,11 +31,14 @@ if __name__ == '__main__':
     #
     # # countour plotting
 
+<<<<<<< HEAD
     # countour_data_plot(xx, yy, vel[0, :, :],color1, 'Normalized x velocity', 'u/U', save=False)
     # countour_data_plot(xx, yy, vel[1, :, :],color1, 'Normalized y velocity', 'v/U', save=False)
     # countour_data_plot(xx, yy, vel[2, :, :],color1, 'Normalized z velocity', 'w/U', save=False)
     #
 
+=======
+>>>>>>> 76e5f28a748f2d78fbc3cd2491d83a00c5aad9c1
 
     #quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :], color1,'Normalized z velocity', 'w/U', save=False)
     quiver_data_plot_cylinder(c_xx, c_yy, c_vel[0, :], c_vel, color1,'velocities cylinder', 'y', save=False)
@@ -51,7 +55,11 @@ if __name__ == '__main__':
     #quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :], color2, 'Normalized z velocity', 'w/U', save=True)
 
 
+    # quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
+    #                  'Normalized z velocity', 'w/U', save=False)
 
+    # quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
+    #'Normalized z velocity', 'w/U', save=True)
 
     # vortex detection preliminaries
 
@@ -59,8 +67,6 @@ if __name__ == '__main__':
 
     u_grad, v_grad, w_grad = vorticity_strain.velocity_gradients(vel)
     u_grad, v_grad, w_grad = np.asarray(u_grad), np.asarray(v_grad), np.asarray(w_grad)
-
-    # quiver_data_plot(xx, yy, vel[0, :, :], u_grad, color2, 'u', 'u/U', save=False)
 
     vorticity_value = vorticity_strain.find_vorticity(u_grad, v_grad)
     strain = vorticity_strain.find_strain(u_grad, v_grad)
@@ -71,6 +77,7 @@ if __name__ == '__main__':
     ### quiver_data_plot(xx, yy, vorticity_value, vel[:2, :, :], color1, 'Vorticity', 'w/U', save=False)
 
     # plot strain and vorticity
+
     ###countour_data_plot(xx, yy, strain, color1, 'Strain', r'S', save=False)
     ###countour_data_plot(xx, yy, vorticity_value, color1, 'Vorticity', 'Omega [1\s]', save=False)
     ###vortexcenter_scatter_plot(xx, yy, vorticity_value, vortex_detection.discrete_method(vel), 'Vorticity', 'Omega [1\s]', save=False)
@@ -79,19 +86,17 @@ if __name__ == '__main__':
     #                 save=True, show=False)
     # AddMannequin()
 
-
-
     # All information:
     quiver_data_plot(xx, yy, vorticity_value, vel[:2, :, :], color1,
                      'Vorticity'+exp, 'Omega [1\s]', vortex_centers=vortex_detection.discrete_method(vel),
                      save=True, show=False)
     AddMannequin()
 
+    # vortex detection
 
 
 
-    # VORTEX DETECTION
-    # ----------------- Q --------------------
+
     q = vortex_detection.q_test(vort_tens, strain_tensor)
     mask = np.where(q > 0)
     q[mask] *= 10
@@ -107,12 +112,6 @@ if __name__ == '__main__':
 
     AddMannequin()
 
-
-    #countour_data_plot(xx, yy, q, color2, 'Q test vortex detection', 'Q', save=False)
-    countour_data_plot(xx, yy, q, color2, 'Q test vortex detection', 'Q', save=True, show=False)
-    AddMannequin()
-
-    # ---------------- Delta -----------------
 
     delta = vortex_detection.delta_test(u_grad, v_grad)
     mask = np.where(delta > 0)
