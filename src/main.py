@@ -12,8 +12,7 @@ if __name__ == '__main__':
     exp = '04'
     x, y, vel = load_data(exp)
     c_exp = '0903'
-    c_x, c_y, c_u, c_v = load_cylinder_data(c_exp)
-    print(c_v)
+    c_x, c_y, c_vel = load_cylinder_data(c_exp)
     xx, yy = np.meshgrid(x, y)
     c_xx, c_yy = np.meshgrid(c_x, c_y)
     color1 = 'coolwarm' #'coolwarm' , 'BrBG'

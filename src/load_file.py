@@ -152,13 +152,10 @@ def load_cylinder_data(experiment):
         velocity = data[:, 2:]
         x, y, dim = parse_structured_grid_cylinder(position)
 
-
-
-
-        # v = velocity[:, 0]
-        # w = velocity[:, 1]
-        # vel = np.array((v, w))
-        return x, y, u, v
+        v = velocity[:, 0]
+        w = velocity[:, 1]
+        vel = np.array((v, w))
+        return x, y, vel
 
 def remove_zeros(velocity):
     for i in range(np.shape(velocity)[1]):
