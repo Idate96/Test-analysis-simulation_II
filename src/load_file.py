@@ -64,6 +64,39 @@ def parse_structured_grid(data, row_missing=True):
     y = data[::columns, 1]
     return x, y, (rows, columns)
 
+def parse_structured_grid_cylinder(data):
+        """Parse and reorganize a structured grid.
+
+        Args:
+            data (np.array : shape (#dof, 2)) = first column contain the x coordinate of the dof, second column the y coordinate
+
+        Returns:
+            x (np.array) = 1d array of coordinates of the dof
+            y (np.array) = 1d array of the y coordinates of the dof
+            dim (tuple) = dimension of the grid
+
+        Remark:
+            since the grid it is structured x,y array give complete information.
+            Grid can be generate with meshgrid(x,y).
+        """
+
+        # init dimesion fo array
+        rows = 0
+        columns = 0
+        # set initial value arra
+        initial_value_x = data[0, 0]
+        # find # dof in y and x dimension of data set
+        for i, element in enumerate(data[:, 0]):
+            if element == initial_value_x:
+                if columns == 0:
+                    columns = i - columns
+                rows += 1
+
+        # assumed structured grid
+        x = data[:columns, 0]
+        y = data[::columns, 1]
+        return x, y, (rows, columns)
+
 
 def load_data(experiment, zeros=False):
     """Load the experimental data.
@@ -98,6 +131,35 @@ def load_data(experiment, zeros=False):
     vel = np.array((u, v, w))
     return x, y, vel
 
+def load_cylinder_data(experiment):
+        """Load the experimental cylinder data.
+
+        Args:
+            experiment (str) = experiment label indicating U_∞
+        Returns:
+            x (np.array) = 1d array of coordinates of the dof
+            y (np.array) = 1d array of the y coordinates of the dof
+            vel (np.array : shape (3, # x dof, # y dof)) = vel[0,i,j] is the u of the point_ij and v[1,i,j] is the v of point_ij ...
+
+        """
+        # try:
+        #     if experiment not in ['16', '04']:
+        #         raise ValueError()
+        # except ValueError:
+        #     print("Choose between '16' or '04'")
+
+
+
+        data = np.loadtxt(dir_path + "/../cylinder_data/velocity_" + experiment + "/B00001.dat", skiprows=3)
+        # select columns data reppresenting position
+        position = data[:, :2]
+        velocity = data[:, 2:]
+        x, y, dim = parse_structured_grid_cylinder(position)
+        u, v , dim = parse_structured_grid_cylinder(velocity)
+        # v = velocity[:, 0]
+        # w = velocity[:, 1]
+        # vel = np.array((v, w))
+        return x, y, u, v
 
 def remove_zeros(velocity):
     for i in range(np.shape(velocity)[1]):
@@ -212,6 +274,33 @@ def quiver_data_plot(xx, yy, data, plane_vector, color, *args, vortex_centers = 
         plt.show()
 
 
+<<<<<<< HEAD
+def quiver_data_plot_cylinder(xx, yy, data, plane_vector, color, *args, vortex_centers = None, save=False, show=True):
+    """Quiver plot."""
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111)
+    mag_plane_vel = (plane_vector[0, :] ** 2 + plane_vector[1, :] ** 2) ** 0.5
+    max = np.nanmax(mag_plane_vel)
+    skip1 = (slice(None, None, 5),slice(None, None, 5))
+    skip = slice(None, None, 50)
+    Q = plt.quiver(xx[skip1], yy[skip1], plane_vector[0][skip], plane_vector[1][skip], units='width', pivot='tip', scale=300)
+    qk = plt.quiverkey(Q, 0.9, 0.9, max, r'{0:.2f} m/s' .format(max), labelpos='E',
+                       coordinates='figure')
+    if vortex_centers:
+        vortexcenter_scatter_plot(xx,yy,data,vortex_centers, show=False, new_plot=False)
+    ax.set_xlabel('z')
+    # ax.set_ylabel('y')
+    print(args)
+    if args:
+        ax.set_title(args[0])
+        ax.set_ylabel(args[1])
+    if save and args:
+        plt.savefig(dir_path + '/../images/' + args[0] + '.png', bbox_inches='tight')
+    if show:
+        plt.show()
+
+=======
+>>>>>>> 76e5f28a748f2d78fbc3cd2491d83a00c5aad9c1
 def AddMannequin():
     '''plot for mannequin'''
     img = imread(dir_path + '/../images/ContourMannequin.png')
