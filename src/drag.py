@@ -39,6 +39,27 @@ def forward_euler(f, u, dt):
     return u
 
 
+def quad_simpson(a, b, n, f, exact_int=0):
+    """Simpson quadrature.
+
+        Args:
+            a (float) = integration interval start
+            b (float) = integration interval end
+            n (int) = number of subintervals of integration
+            f (obj func) = function to be integrated.
+            exact_int (float : optional) = exact integral value
+
+        Returns:
+            integral_value (float) = value of the integral_value.
+            error (float) = error of integration if available
+    """
+    x = np.linspace(a, b, n + 1)
+    h = (b - a) / n
+    num_int = h / 2 * (1 / 3 * f(x) + 4 / 3 * f(x + h / 2) + 1 / 3 * f(x + h))
+    integral_value = np.sum(num_int[:-1])
+    return integral_value, integral_value - exact_int
+    
+
 def adam_bashfort(f, u, u_0, dt):
     """Adam bashfort 2 step method.
 
