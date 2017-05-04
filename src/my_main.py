@@ -40,6 +40,9 @@ def parse_shit_out(domain_bottom, domain_top):
     pass
 
 if __name__ == '__main__':
+
+
+
     U = 4
     x, y, vel = load_data("Velocity_04", zeros=True)
     # conversion to meters

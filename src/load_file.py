@@ -274,7 +274,7 @@ def quiver_data_plot(xx, yy, data, plane_vector, color, *args, vortex_centers = 
         plt.show()
 
 
-<<<<<<< HEAD
+
 def quiver_data_plot_cylinder(xx, yy, data, plane_vector, color, *args, vortex_centers = None, save=False, show=True):
     """Quiver plot."""
     fig = plt.figure(figsize=(10, 8))

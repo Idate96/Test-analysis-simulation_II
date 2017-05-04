@@ -31,14 +31,7 @@ if __name__ == '__main__':
     #
     # # countour plotting
 
-<<<<<<< HEAD
-    # countour_data_plot(xx, yy, vel[0, :, :],color1, 'Normalized x velocity', 'u/U', save=False)
-    # countour_data_plot(xx, yy, vel[1, :, :],color1, 'Normalized y velocity', 'v/U', save=False)
-    # countour_data_plot(xx, yy, vel[2, :, :],color1, 'Normalized z velocity', 'w/U', save=False)
-    #
 
-=======
->>>>>>> 76e5f28a748f2d78fbc3cd2491d83a00c5aad9c1
 
     #quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :], color1,'Normalized z velocity', 'w/U', save=False)
     quiver_data_plot_cylinder(c_xx, c_yy, c_vel[0, :], c_vel, color1,'velocities cylinder', 'y', save=False)

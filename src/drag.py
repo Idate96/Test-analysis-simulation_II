@@ -1,6 +1,7 @@
 """In this module there are methods to calculated drag from discrete vector field data."""
 import numpy as np
 import vorticity_strain
+from load_file import *
 
 
 def simpson_quad_2d(func, domain):
@@ -58,7 +59,7 @@ def quad_simpson(a, b, n, f, exact_int=0):
     num_int = h / 2 * (1 / 3 * f(x) + 4 / 3 * f(x + h / 2) + 1 / 3 * f(x + h))
     integral_value = np.sum(num_int[:-1])
     return integral_value, integral_value - exact_int
-    
+
 
 def adam_bashfort(f, u, u_0, dt):
     """Adam bashfort 2 step method.
@@ -123,6 +124,11 @@ def fluctuation_drag(std_streamwise, domain):
     return drag
 
 if __name__ == '__main__':
+    x, y, vel_stream, vel_y = load_cylinder_data("0903")
+    print(np.shape(x), np.shape(vel_stream))
+    xx, yy = np.meshgrid(x,y)
+    quiver_data_plot(xx,yy, vel_stream)
+    xx, yy, data, plane_vector, color, *args
     # x, y = np.linspace(-2, 2, 31), np.linspace(0, 1, 51)
     # xx, yy = np.meshgrid(x, y)
     # func = test_func(xx, yy)
