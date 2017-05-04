@@ -19,7 +19,7 @@ if __name__ == '__main__':
     color1 = 'coolwarm' #'coolwarm' , 'BrBG'
     color2 = 'bone'
 
-    #-------- Normalised Velocity Plots -------------
+    #-------- Norma̦lised Velocity Plots -------------
 
     # quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :],
     #  'Normalized z velocity', 'w/U', save=False)
@@ -30,7 +30,6 @@ if __name__ == '__main__':
     # plot_data_3d(xx, yy, vel[2, :, :])
     #
     # # countour plotting
-
 
 
     #quiver_data_plot(xx, yy, vel[2, :, :], vel[:2, :, :], color1,'Normalized z velocity', 'w/U', save=False)
