@@ -29,7 +29,7 @@ def load(x, y, location):
     return data[numb_loc]
 
 
-def parse_structured_grid(data, row_missing=True):
+def parse_structured_grid(data):
     """Parse and reorganize a structured grid.
 
     Args:
@@ -56,9 +56,8 @@ def parse_structured_grid(data, row_missing=True):
                 columns = i - columns
             rows += 1
     # fist row is missing replace it with fictional value
-    if row_missing:
-        fict_value = np.array((data[columns - 1, 0], data[0, 1]))
-        data = np.vstack((fict_value, data))
+    fict_value = np.array((data[columns - 1, 0], data[0, 1]))
+    data = np.vstack((fict_value, data))
     # assumed structured grid
     x = data[:columns, 0]
     y = data[::columns, 1]
@@ -98,7 +97,7 @@ def parse_structured_grid_cylinder(data):
         return x, y, (rows, columns)
 
 
-def load_data(experiment, zeros=False):
+def load_data(experiment):
     """Load the experimental data.
 
     Args:
@@ -110,17 +109,14 @@ def load_data(experiment, zeros=False):
 
     """
     try:
-        if experiment not in ["Velocity_16", "Velocity_04", "StD_vel04", "StD_vel16"]:
+        if experiment not in ['16', '04']:
             raise ValueError()
     except ValueError:
         print("Choose between '16' or '04'")
-    data = np.loadtxt(dir_path + "/../exp_data/" + experiment + ".plt", skiprows=4)
+    data = np.loadtxt(dir_path + "/../exp_data/Velocity_" + experiment + ".plt", skiprows=4)
     # select columns data reppresenting position
     position = data[:, :2]
-    if not zeros:
-        velocity = remove_zeros(data[:, 3:])
-    else:
-        velocity = data[:, 3:]
+    velocity = remove_zeros(data[:, 3:])
     x, y, dim = parse_structured_grid(position)
     # data is missing one row
     first_row = np.array((0))
@@ -155,7 +151,10 @@ def load_cylinder_data(experiment):
         position = data[:, :2]
         velocity = data[:, 2:]
         x, y, dim = parse_structured_grid_cylinder(position)
-        u, v , dim = parse_structured_grid_cylinder(velocity)
+
+
+
+
         # v = velocity[:, 0]
         # w = velocity[:, 1]
         # vel = np.array((v, w))
@@ -215,7 +214,6 @@ def countour_data_plot(xx, yy, data, color, *args, save=False, show=True):
     if show:
         plt.show()
 
-
 def vortexcenter_scatter_plot(xx, yy, data, centers, *args, save=False, show=True, new_plot=True):
     if new_plot:
         fig = plt.figure(figsize=(10, 8))
@@ -228,15 +226,14 @@ def vortexcenter_scatter_plot(xx, yy, data, centers, *args, save=False, show=Tru
     ylst = []
     strengthlst = []
     for point in centers:
-        i, j, strength = point
+        i,j,strength = point
         x = xx[i, j]
         y = yy[i, j]
-
-        strengthlst.append(strength ** 4 * 300000)
+        strengthlst.append(strength**4*300000)
         xlst.append(x)
         ylst.append(y)
 
-    plt.scatter(xlst, ylst, s=strengthlst, c='red')
+    plt.scatter(xlst,ylst, s = strengthlst, c = 'red')
 
     # ax.set_ylabel('y')
     if args:
@@ -246,6 +243,7 @@ def vortexcenter_scatter_plot(xx, yy, data, centers, *args, save=False, show=Tru
         plt.savefig(dir_path + '/../images/' + args[0] + '.png', bbox_inches='tight')
     if show:
         plt.show()
+
 
 
 def quiver_data_plot(xx, yy, data, plane_vector, color, *args, vortex_centers = None, save=False, show=True):
@@ -260,7 +258,7 @@ def quiver_data_plot(xx, yy, data, plane_vector, color, *args, vortex_centers = 
     qk = plt.quiverkey(Q, 0.9, 0.9, max, r'{0:.2f} m/s' .format(max), labelpos='E',
                        coordinates='figure')
     if vortex_centers:
-        vortexcenter_scatter_plot(xx, yy, data, vortex_centers, show=False, new_plot=False)
+        vortexcenter_scatter_plot(xx,yy,data,vortex_centers, show=False, new_plot=False)
     ax.set_xlabel('x')
     # ax.set_ylabel('y')
     fig.colorbar(cs)
@@ -274,16 +272,13 @@ def quiver_data_plot(xx, yy, data, plane_vector, color, *args, vortex_centers = 
         plt.show()
 
 
-<<<<<<< HEAD
 def quiver_data_plot_cylinder(xx, yy, data, plane_vector, color, *args, vortex_centers = None, save=False, show=True):
     """Quiver plot."""
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111)
     mag_plane_vel = (plane_vector[0, :] ** 2 + plane_vector[1, :] ** 2) ** 0.5
     max = np.nanmax(mag_plane_vel)
-    skip1 = (slice(None, None, 5),slice(None, None, 5))
-    skip = slice(None, None, 50)
-    Q = plt.quiver(xx[skip1], yy[skip1], plane_vector[0][skip], plane_vector[1][skip], units='width', pivot='tip', scale=300)
+    Q = plt.quiver(xx, yy, plane_vector[0], plane_vector[1], units='width', pivot='tip', scale=300)
     qk = plt.quiverkey(Q, 0.9, 0.9, max, r'{0:.2f} m/s' .format(max), labelpos='E',
                        coordinates='figure')
     if vortex_centers:
@@ -299,38 +294,13 @@ def quiver_data_plot_cylinder(xx, yy, data, plane_vector, color, *args, vortex_c
     if show:
         plt.show()
 
-=======
->>>>>>> 76e5f28a748f2d78fbc3cd2491d83a00c5aad9c1
 def AddMannequin():
     '''plot for mannequin'''
     img = imread(dir_path + '/../images/ContourMannequin.png')
     # Adjust axis according to needs...
-    plt.axis([-35, 35, 50, 135])
-    plt.imshow(img, zorder=1, extent=[-28, 28, -3, 140])
-
-
-def load_stress(file_name, zeros=False):
-    """Load the experimental data.
-
-    Args:
-        experiment (str) = experiment label indicating U_∞
-    Returns:
-        x (np.array) = 1d array of coordinates of the dof
-        y (np.array) = 1d array of the y coordinates of the dof
-        stress (np.array : shape (1, # x dof, # y dof)) = stress[0,i,j] is the stress of the point_ij
-
-    """
-    data = np.loadtxt(dir_path + "/../exp_data/Re/" + file_name, skiprows=3)
-    # select columns data reppresenting position
-    position = data[:, :2]
-    if not zeros:
-        stress = remove_zeros(data[:, 3:])
-    else:
-        stress = data[:, 3:]
-    x, y, dim = parse_structured_grid(position, row_missing=False)
-    stress = stress.reshape(dim)
-    return x, y, stress
-
+    plt.axis([-35,35,50,135])
+    plt.imshow(img,zorder=1, extent=[-28, 28, -3, 140])
+    plt.show()
 
 if __name__ == '__main__':
     pass
